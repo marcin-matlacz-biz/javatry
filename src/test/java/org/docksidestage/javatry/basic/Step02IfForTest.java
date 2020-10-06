@@ -16,7 +16,9 @@
 package org.docksidestage.javatry.basic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 import org.docksidestage.unit.PlainTestCase;
 
@@ -42,6 +44,7 @@ public class Step02IfForTest extends PlainTestCase {
             sea = 2001;
         }
         log(sea); // your answer? => 2001
+        assertEquals(sea, 2001);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -52,7 +55,8 @@ public class Step02IfForTest extends PlainTestCase {
         } else {
             sea = 7;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 7
+        assertEquals(sea, 7);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -67,7 +71,8 @@ public class Step02IfForTest extends PlainTestCase {
         } else {
             sea = 9;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 7
+        assertEquals(sea, 7);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -91,7 +96,8 @@ public class Step02IfForTest extends PlainTestCase {
         if (land) {
             sea = 10;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 8
+        assertEquals(sea, 8);
     }
 
     // ===================================================================================
@@ -107,7 +113,8 @@ public class Step02IfForTest extends PlainTestCase {
                 sea = stage;
             }
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "dockside"
+        assertEquals(sea, "dockside");
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -117,7 +124,8 @@ public class Step02IfForTest extends PlainTestCase {
         for (String stage : stageList) {
             sea = stage;
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "magiclamp"
+        assertEquals(sea, "magiclamp");
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -133,7 +141,8 @@ public class Step02IfForTest extends PlainTestCase {
                 break;
             }
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "hangar"
+        assertEquals(sea, "hangar");
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -149,7 +158,8 @@ public class Step02IfForTest extends PlainTestCase {
             }
         });
         String sea = sb.toString();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "dockside"
+        assertEquals(sea, "dockside");
     }
 
     // ===================================================================================
@@ -161,6 +171,16 @@ public class Step02IfForTest extends PlainTestCase {
      */
     public void test_iffor_making() {
         // write if-for here
+        List<String> stageList = prepareStageList();
+        List<String> containingLetterA = new ArrayList<>();
+        for (String stage : stageList) {
+            if (stage.contains("a")) {
+                containingLetterA.add(stage);
+                log(stage);
+            }
+        }
+        List<String> expectedStages = Arrays.asList("broadway", "hangar", "magiclamp");
+        assertTrue(containingLetterA.containsAll(expectedStages));
     }
 
     // ===================================================================================
@@ -173,16 +193,29 @@ public class Step02IfForTest extends PlainTestCase {
     public void test_iffor_refactor_foreach_to_forEach() {
         List<String> stageList = prepareStageList();
         String sea = null;
-        for (String stage : stageList) {
-            if (stage.startsWith("br")) {
-                continue;
+        //        for (String stage : stageList) {
+        //            if (stage.startsWith("br")) {
+        //                continue;
+        //            }
+        //            sea = stage;
+        //            if (stage.contains("ga")) {
+        //                break;
+        //            }
+        //        }
+        String[] tempSea = new String[1];
+        boolean[] blockAssignment = { false };
+        stageList.forEach((stage) -> {
+            if (!stage.startsWith("br") && !blockAssignment[0]) {
+                tempSea[0] = stage;
             }
-            sea = stage;
             if (stage.contains("ga")) {
-                break;
+                blockAssignment[0] = true;
             }
-        }
+        });
+        sea = tempSea[0];
         log(sea); // should be same as before-fix
+        String expectedString = "hangar";
+        assertEquals(expectedString, sea);
     }
 
     /**
@@ -191,12 +224,31 @@ public class Step02IfForTest extends PlainTestCase {
      * <pre>
      * _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
      * your question here (ここにあなたの質問を):
-     * 
+     *
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
     public void test_iffor_yourExercise() {
         // write your code here
+        String sea = null;
+        List<String> stageList = prepareStageList();
+        Stack<String> stringStack = new Stack<>();
+        for (String stage : stageList) {
+            if (!stage.contains("ga")) {
+                stringStack.push(stage);
+            }
+        }
+        List<String> stringArray = new ArrayList<>();
+        while (!stringStack.empty()) {
+            if (!stringStack.peek().startsWith("br")) {
+                stringArray.add(stringStack.pop());
+            } else {
+                stringStack.pop();
+            }
+        }
+        sea = stringArray.get(0);
+        log(sea); // sea -> "magiclamp"
+        assertEquals(sea, "magiclamp");
     }
 
     // ===================================================================================
