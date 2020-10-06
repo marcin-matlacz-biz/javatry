@@ -35,7 +35,8 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_call_basic() {
         String sea = supplySomething();
-        log(sea); // your answer? =>
+        log(sea); // your answer? => "over"
+        assertEquals(sea, "over");
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -43,7 +44,8 @@ public class Step04MethodTest extends PlainTestCase {
         String sea = functionSomething("mystic");
         consumeSomething(supplySomething());
         runnableSomething();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => "mysmys"
+        assertEquals(sea, "mysmys");
     }
 
     private String functionSomething(String name) {
@@ -71,12 +73,13 @@ public class Step04MethodTest extends PlainTestCase {
     public void test_method_object() {
         St4MutableStage mutable = new St4MutableStage();
         int sea = 904;
-        boolean land = false;
+        Boolean land = false;
         helloMutable(sea - 4, land, mutable);
         if (!land) {
             sea = sea + mutable.getStageName().length();
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 910
+        assertEquals(sea, 904+6);
     }
 
     private int helloMutable(int sea, Boolean land, St4MutableStage piari) {
@@ -104,6 +107,7 @@ public class Step04MethodTest extends PlainTestCase {
     //                                                                   =================
     private int inParkCount;
     private boolean hasAnnualPassport;
+    private boolean availableLogging = true;
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_method_instanceVariable() {
@@ -115,7 +119,8 @@ public class Step04MethodTest extends PlainTestCase {
         }
         ++sea;
         sea = inParkCount;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 100
+        assertEquals(sea, 100);
     }
 
     private void offAnnualPassport(boolean hasAnnualPassport) {
@@ -152,12 +157,31 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_making() {
         // comment out after making these methods
-        //String replaced = replaceCtoB(replaceAtoB("ABC"));
-        //String sea = addPrefix("broadway", replaced);
-        //if (isAvailableLogging()) {
-        //    showSea(sea);
-        //}
+        String replaced = replaceCtoB(replaceAtoB("ABC"));
+        String sea = addPrefix("broadway", replaced);
+        if (isAvailableLogging()) {
+            showSea(sea);
+        }
     }
 
     // write methods here
+    private String replaceAtoB(String arg){
+        return arg.replace("A", "B");
+    }
+
+    private String replaceCtoB(String arg){
+        return arg.replace("C", "B");
+    }
+
+    private String addPrefix(String prefix, String suffix) {
+        return prefix + ":" + suffix;
+    }
+
+    private boolean isAvailableLogging() {
+        return availableLogging;
+    }
+
+    private void showSea(String val) {
+        log(val);
+    }
 }
