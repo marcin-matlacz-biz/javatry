@@ -3,7 +3,7 @@ package org.docksidestage.bizfw.basic.buyticket;
 public class OneDayTicket implements Ticket {
     private final int displayPrice;
     private final TicketType type;
-    private boolean inParked = false;
+    private boolean alreadyIn = false;
 
     public OneDayTicket(int displayPrice, TicketType type) {
         this.displayPrice = displayPrice;
@@ -12,7 +12,10 @@ public class OneDayTicket implements Ticket {
 
     @Override
     public void doInPark() {
-        inParked = true;
+        if (alreadyIn) {
+            throw new IllegalStateException("Already in park by this ticket: displayPrice=" + displayPrice);
+        }
+        alreadyIn = true;
     }
     @Override
     public int getDisplayPrice() {
@@ -20,7 +23,7 @@ public class OneDayTicket implements Ticket {
     }
     @Override
     public boolean isAlreadyIn() {
-        return inParked;
+        return alreadyIn;
     }
     @Override
     public TicketType getType() {

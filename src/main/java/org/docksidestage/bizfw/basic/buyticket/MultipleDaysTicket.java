@@ -4,7 +4,7 @@ public class MultipleDaysTicket implements Ticket {
     private int numberOfDays;
     private final int displayPrice;
     private final TicketType type;
-    private boolean inParked = false;
+    private boolean alreadyIn = false;
 
     public MultipleDaysTicket(int displayPrice, TicketType type, int numberOfDays) {
         this.displayPrice = displayPrice;
@@ -16,7 +16,7 @@ public class MultipleDaysTicket implements Ticket {
     public void doInPark() {
         if (numberOfDays > 0) {
             --numberOfDays;
-            inParked = true;
+            alreadyIn = true;
         } else {
             throw new TicketExpired("The ticked is used.");
         }
@@ -27,7 +27,7 @@ public class MultipleDaysTicket implements Ticket {
     }
     @Override
     public boolean isAlreadyIn() {
-        return inParked;
+        return alreadyIn;
     }
     @Override
     public TicketType getType() {
