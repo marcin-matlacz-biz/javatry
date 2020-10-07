@@ -15,6 +15,9 @@
  */
 package org.docksidestage.javatry.basic;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.docksidestage.bizfw.basic.supercar.SupercarClient;
 import org.docksidestage.javatry.basic.st7.St7ConstructorChallengeException;
 import org.docksidestage.unit.PlainTestCase;
@@ -39,6 +42,7 @@ public class Step07ExceptionTest extends PlainTestCase {
         IllegalStateException exp = new IllegalStateException("mystic");
         String sea = exp.getMessage();
         log(sea); // your answer? => mystic
+        assertEquals(sea, "mystic");
     }
 
     // ===================================================================================
@@ -51,35 +55,40 @@ public class Step07ExceptionTest extends PlainTestCase {
     public void test_exception_hierarchy_Runtime_instanceof_RuntimeException() {
         Object exp = new IllegalStateException("mystic");
         boolean sea = exp instanceof RuntimeException;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => true
+        assertTrue(sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_exception_hierarchy_Runtime_instanceof_Exception() {
         Object exp = new IllegalStateException("mystic");
         boolean sea = exp instanceof Exception;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => true
+        assertTrue(sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_exception_hierarchy_Runtime_instanceof_Error() {
         Object exp = new IllegalStateException("mystic");
         boolean sea = exp instanceof Error;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => false
+        assertFalse(sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_exception_hierarchy_Runtime_instanceof_Throwable() {
         Object exp = new IllegalStateException("mystic");
         boolean sea = exp instanceof Throwable;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => true
+        assertTrue(sea);
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_exception_hierarchy_Throwable_instanceof_Exception() {
         Object exp = new Throwable("mystic");
         boolean sea = exp instanceof Exception;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => false
+        assertFalse(sea);
     }
 
     // ===================================================================================
@@ -90,6 +99,13 @@ public class Step07ExceptionTest extends PlainTestCase {
      * (new java.io.File(".") の canonical path を取得してログに表示、I/Oエラーはメッセージとスタックトレースを代わりに)
      */
     public void test_exception_checkedException_basic() {
+        File file = new File(".");
+        try {
+            log(file.getCanonicalPath());
+        } catch (IOException e) {
+            log(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     // ===================================================================================
@@ -112,7 +128,10 @@ public class Step07ExceptionTest extends PlainTestCase {
             land = cause.getClass().getSimpleName();
             log(sea); // your answer? => 
             log(land); // your answer? => 
-            log(e); // your answer? => 
+            log(e); // your answer? =>
+            assertEquals(sea, "Failed to call the third help method: -1");
+            assertEquals(land, "IllegalArgumentException");
+            assertEquals(e.toString(), "java.lang.IllegalStateException: Failed to call the second help method: -1");
         }
     }
 
@@ -157,7 +176,7 @@ public class Step07ExceptionTest extends PlainTestCase {
             // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
             // What happens? Write situation and cause here. (何が起きた？状況と原因をここに書いてみましょう)
             // - - - - - - - - - -
-            //
+            //The database contains incorrect product specification - no validation on write???
             //
             //
             // _/_/_/_/_/_/_/_/_/_/
@@ -188,17 +207,13 @@ public class Step07ExceptionTest extends PlainTestCase {
     public void test_exception_writing_constructorChallenge() {
         try {
             helpSurprisedYabaiCatch();
-        } catch (St7ConstructorChallengeException e) {
+        } catch (IllegalStateException e) {
             log("Thrown by help method", e); // should show also "Caused-by" information
         }
     }
 
     private void helpSurprisedYabaiCatch() {
-        try {
-            helpThrowIllegalState();
-        } catch (IllegalStateException e) {
-            throw new St7ConstructorChallengeException("Failed to do something.");
-        }
+        helpThrowIllegalState();
     }
 
     private void helpThrowIllegalState() { // simple implementation here
