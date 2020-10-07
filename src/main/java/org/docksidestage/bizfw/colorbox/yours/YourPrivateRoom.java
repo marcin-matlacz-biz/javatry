@@ -123,7 +123,12 @@ public class YourPrivateRoom {
 
     private StandardColorBox makeFifthColorBox() {
         StandardColorBox colorBox = new StandardColorBox(new BoxColor("white"), new BoxSize(30, 40, 50));
-        SecretBox upperBox = asPrivate("map:{ dockside = over ; hangar = mystic ; broadway = bbb }"); // simple map
+        Map<String, String> simpleMap = new LinkedHashMap<>();
+        simpleMap.put("dockside", "over");
+        simpleMap.put("hangar", "mystic");
+        simpleMap.put("broadway", "bbb");
+//        SecretBox upperBox = asPrivate("map:{ dockside = over ; hangar = mystic ; broadway = bbb }"); // simple map
+        SecretBox upperBox = asPrivate(simpleMap.toString()); // simple map
         colorBox.getUpperSpace().setContent(upperBox);
 
         SecretBox middleBox = // second value is nested
