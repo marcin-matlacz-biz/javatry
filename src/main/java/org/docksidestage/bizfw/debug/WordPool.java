@@ -25,7 +25,10 @@ public class WordPool {
     }
 
     public Word find(String word) {
-        return wordMap.values().stream().filter(v -> v.getWord().equals(word)).findFirst().orElseThrow(NoSuchElementException::new);
+        return wordMap.values().stream()
+                .filter(v -> v.getWord().equals(word))
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
     }
 
     public Long findId(String word) {
@@ -34,11 +37,11 @@ public class WordPool {
                 .filter(entry -> entry.getValue().getWord().equals(word))
                 .map(Map.Entry::getKey)
                 .findFirst()
-                .get();
+                .orElse(-1L);
     }
 
     public Word find(Long id) {
-        return wordMap.remove(id);
+        return wordMap.get(id);
     }
 
     public Word update(Long id, Word word) {
@@ -55,15 +58,18 @@ public class WordPool {
         return wordMap.get(id);
     }
 
-    public Word update(String language, String word1, String word2) {
-        Long id = findId(word2);
+    public Word update(String language, String oldWord, String newWord) {
+        Long id = findId(oldWord);
         wordMap.remove(id);
-        wordMap.put(id, new Word(new Language(language), word1));
+        wordMap.put(id, new Word(new Language(language), newWord));
         return wordMap.get(id);
     }
 
     public String replace(Long id, String word1, String word2) {
-        return wordMap.get(id).getWord().replace(word1, word2);
+        String newValue = wordMap.get(id).getWord().replace(word1, word2);
+        Word word = wordMap.get(id);
+        wordMap.replace(id, new Word(word.getLanguage(), newValue));
+        return newValue;
     }
 
     public void delete(Long id) {
