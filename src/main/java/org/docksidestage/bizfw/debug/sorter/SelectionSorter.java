@@ -26,15 +26,13 @@ public class SelectionSorter implements Sorter<Word> {
     public List<Word> sort(List<Word> wordList) {
         int n = wordList.size();
         for (int i = 0; i < n - 1; i++) {
-            int m = i;
             for (int j = i + 1; j < n; j++) {
                 if (wordList.get(j).getWord().compareTo(wordList.get(i).getWord()) < 0) {
-                    m = j;
+                    Word t = wordList.get(i);
+                    wordList.set(i, wordList.get(j));
+                    wordList.set(j, t);
                 }
             }
-            Word t = wordList.get(m);
-            wordList.set(m, wordList.get(i));
-            wordList.set(i, t);
         }
         return wordList;
     }

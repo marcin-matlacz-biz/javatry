@@ -26,7 +26,7 @@ public class Step23SorterTest extends PlainTestCase {
         // assert
         int rank = 0;
         for (Language language : languages) {
-            assertTrue(rank < language.rank);
+            assertTrue(rank <= language.rank);
             rank = language.rank;
         }
     }
@@ -34,10 +34,20 @@ public class Step23SorterTest extends PlainTestCase {
     public void test_wordSorter() {
         // arrange
         Language language = new LanguagePool().getLanguage("English");
-        List<Word> input = Arrays.asList(new Word(language, "Candy"), new Word(language, "Table"), new Word(language, "Bee"),
-                new Word(language, "Zebra"), new Word(language, "Apple"));
-        List<Word> expected = Arrays.asList(new Word(language, "Apple"), new Word(language, "Bee"), new Word(language, "Candy"),
-                new Word(language, "Table"), new Word(language, "Zebra"));
+        List<Word> input = Arrays.asList(
+                new Word(language, "Candy"),
+                new Word(language, "Table"),
+                new Word(language, "Bee"),
+                new Word(language, "Zebra"),
+                new Word(language, "Apple")
+        );
+        List<Word> expected = Arrays.asList(
+                new Word(language, "Apple"),
+                new Word(language, "Bee"),
+                new Word(language, "Candy"),
+                new Word(language, "Table"),
+                new Word(language, "Zebra")
+        );
 
         // act
         List<Word> result = new WordSorter().sort(input);
@@ -53,7 +63,13 @@ public class Step23SorterTest extends PlainTestCase {
         // arrange
         Language language = new LanguagePool().getLanguage("Japanese");
         List<Word> expected =
-                Arrays.asList(new Word(language, "昴"), new Word(language, "柿"), new Word(language, "私"), new Word(language, "荼"));
+                Arrays.asList(
+                        new Word(language, "君"),
+                        new Word(language, "昴"),
+                        new Word(language, "柿"),
+                        new Word(language, "私"),
+                        new Word(language, "荼")
+                );
 
         // act
         List<Word> result = new WordAssort().sort();

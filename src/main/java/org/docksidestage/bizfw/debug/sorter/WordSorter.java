@@ -12,6 +12,11 @@ import org.docksidestage.bizfw.debug.WordPool;
  */
 public class WordSorter implements Sorter<Word> {
     public List<Word> words;
+    private final List<Sorter<Word>> sorters = Arrays.asList(
+            new BubbleSorter(),
+            new SelectionSorter(),
+            new QuickSorter()
+    );
 
     public WordSorter() {
         words = new WordPool().getWords();
@@ -19,15 +24,13 @@ public class WordSorter implements Sorter<Word> {
 
     @Override
     public List<Word> sort() {
-        List<Sorter<Word>> sorters = Arrays.asList(new BubbleSorter(), new SelectionSorter(), new QuickSorter());
         int i = new Random().nextInt(sorters.size());
         return sorters.get(i).sort();
     }
 
     @Override
     public List<Word> sort(List<Word> list) {
-        List<Sorter<Word>> sorters = Arrays.asList(new BubbleSorter(), new SelectionSorter(), new QuickSorter());
         int i = new Random().nextInt(sorters.size());
-        return sorters.get(i).sort(words);
+        return sorters.get(i).sort(list);
     }
 }
