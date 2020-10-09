@@ -19,9 +19,11 @@ public class IteratorSearcher implements Searcher {
     @Override
     public Word search(String searchingFor) {
         Iterator<Word> iterator = words.iterator();
+        Word nextWord;
         while (iterator.hasNext()) {
-            if (iterator.next().getWord().equals(searchingFor)) {
-                return iterator.next();
+            nextWord = iterator.next();
+            if (nextWord.getWord().equals(searchingFor)) {
+                return nextWord;
             }
         }
         throw new IllegalArgumentException("the word you are looking for is not here, word:" + searchingFor);
