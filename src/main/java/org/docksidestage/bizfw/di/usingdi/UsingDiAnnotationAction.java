@@ -18,6 +18,7 @@ package org.docksidestage.bizfw.di.usingdi;
 import org.docksidestage.bizfw.basic.objanimal.Animal;
 import org.docksidestage.bizfw.basic.supercar.SupercarDealer;
 import org.docksidestage.bizfw.basic.supercar.SupercarManufacturer.Supercar;
+import org.docksidestage.bizfw.di.cast.TooLazyDog;
 import org.docksidestage.bizfw.di.container.component.SimpleInject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,7 @@ public class UsingDiAnnotationAction {
     //                                                                         Dog Process
     //                                                                         ===========
     public void callFriend() {
+        System.out.println("animal instanceof TooLazyDog: " + (animal instanceof TooLazyDog));
         animal.bark();
     }
 
